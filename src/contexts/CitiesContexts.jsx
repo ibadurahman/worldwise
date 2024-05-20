@@ -6,7 +6,8 @@ import {
   useReducer,
 } from "react";
 
-const BASE_URL = "http://localhost:8000";
+const BASE_URL = "https://api.jsonbin.io/v3/b";
+const BIN_ID = "664b1717e41b4d34e4f69242";
 
 const CitiesContext = createContext();
 
@@ -65,9 +66,9 @@ function CitiesProvider({ children }) {
     async function fetchCities() {
       try {
         dispatch({ type: "loading" });
-        const res = await fetch(`${BASE_URL}/cities`);
+        const res = await fetch(`${BASE_URL}/${BIN_ID}`);
         const data = await res.json();
-        dispatch({ type: "cities/loaded", payload: data });
+        dispatch({ type: "cities/loaded", payload: data.record.cities });
       } catch {
         dispatch({
           type: "rejected",
